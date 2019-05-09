@@ -1,0 +1,106 @@
+{
+  "project_info": {
+    "project_number": "315455148604",
+    "firebase_url": "https://employee-956db.firebaseio.com",
+    "project_id": "employee-956db",
+    "storage_bucket": "employee-956db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315455148604:android:a40ed6eb08e920be",
+        "android_client_info": {
+          "package_name": "com.example.firebasedemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315455148604-char30v47858odgc7iikm4tkbsfl0vsc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.firebasedemo",
+            "certificate_hash": "682bd18dde5ea3e301ed31b77e832066d971b54d"
+          }
+        },
+        {
+          "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO4asXdDPJ_Y7-DtWV9NIPnyNFSVZZL2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315455148604:android:946ed9ccbfc81de2",
+        "android_client_info": {
+          "package_name": "com.example.sourav.employeetrack"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO4asXdDPJ_Y7-DtWV9NIPnyNFSVZZL2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:315455148604:android:60573ac4c3f9ec3b",
+        "android_client_info": {
+          "package_name": "com.example.sourav.trackemployee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCO4asXdDPJ_Y7-DtWV9NIPnyNFSVZZL2A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "315455148604-e5inhqaqfce1m03uc7suck33j1q2dmed.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

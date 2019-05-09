@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Student\'s</string>
+    <string name="title_activity_maps">Map</string>
+
+    <string name="select_school">Select school</string>
+    <string name="select_class">Select class</string>
+    <string name="save">save</string>
+    <string name="student_name">Student Name</string>
+    <string name="student_roll_id">Student Roll/ID</string>
+    <string name="How_you_came_to_school">How you came to school</string>
+    <string name="address">Address</string>
+    <string name="search_school">Search school</string>
+    <string name="get_location_on_searching">Get Location on Searching</string>
+    <string name="set">set</string>
+    <string name="children_s">Children\'s</string>
+
+    <string-array name="school">
+        <item>Dhaka Residential Model College, Dhaka</item>
+        <item>RAJUK Uttara Model College</item>
+        <item><![CDATA[Ideal School & College, Dhaka]]></item>
+        <item>Government Laboratory High School, Dhaka</item>
+        <item>Viqarunnisa Noon School and College, Dhaka</item>
+    </string-array>
+
+    <string-array name="vehicle">
+        <item>Bus</item>
+        <item>Car</item>
+        <item>CNG</item>
+        <item>Rikshawa</item>
+        <item>Walking</item>
+    </string-array>
+</resources>

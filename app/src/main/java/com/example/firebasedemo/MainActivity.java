@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     AutoCompleteTextView schoolNameAC, schoolClassAc;
     Spinner studentCameWaySP;
     Button locationBTN, saveBTN;
+    Toolbar toolbar;
 
     String studentName, schoolClass, studentRoll,schoolName, studentLat , studentLng;
     Double lat, lng;
@@ -49,6 +51,9 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
 
+
+        toolbar = findViewById(R.id.tool_bar);
+        setSupportActionBar(toolbar);
 
         schoolNameAC = findViewById(R.id.actvSchoolSelect);
         studentNameET = findViewById(R.id.etStudentName);

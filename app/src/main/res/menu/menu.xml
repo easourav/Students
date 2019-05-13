@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:title="@string/children_s"
-        android:id="@+id/childrenMenu"
-        app:showAsAction="always"
-        android:icon="@drawable/icon"/>
+    <group android:checkableBehavior="single">
+
+        <item android:title="@string/home"
+            android:id="@+id/homeMenu"
+            android:icon="@drawable/ic_home_black_24dp" />
+
+        <item android:title="@string/add_student"
+            android:id="@+id/addStudentMenu"
+            android:icon="@drawable/ic_add" />
+
+        <item android:title="@string/view_map"
+            android:id="@+id/viewMapMenu"
+            android:icon="@drawable/studenthomemapicon" />
+
+        <item android:title="@string/view_report"
+            android:id="@+id/viewReportMenu"
+            android:icon="@drawable/reporticon" />
+    </group>
+
 
 </menu>

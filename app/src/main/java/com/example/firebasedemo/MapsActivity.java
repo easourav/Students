@@ -23,6 +23,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -61,6 +62,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button setBtn;
     AutoCompleteTextView searchSchoolAC;
     ImageView addressMarkerIv, closeIv, searchIv;
+    TextView addressTv;
 
     DatabaseReference databaseReference;
 
@@ -94,6 +96,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         closeIv = findViewById(R.id.ivClose);
         setBtn = findViewById(R.id.btnSet);
         searchIv = findViewById(R.id.ivSearch);
+        addressTv = findViewById(R.id.addressTv);
 
         getCurrentLatLng();
 
@@ -318,7 +321,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             studentLat = addresses.get(0).getLatitude();
                             studentLng = addresses.get(0).getLongitude();
                             if (!locality.isEmpty() && !country.isEmpty())
-                                searchSchoolAC.setText(locality );
+                                addressTv.setText(locality );
+                            Toast.makeText(MapsActivity.this, ""+locality, Toast.LENGTH_SHORT).show();
                         }
 
                     }catch (Exception e){

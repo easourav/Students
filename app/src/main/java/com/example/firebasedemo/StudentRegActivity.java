@@ -157,28 +157,7 @@ public class StudentRegActivity extends AppCompatActivity {
         });
     }
 
-
-    /*@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu, menu);
-        return true;
-
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.childrenMenu) {
-            Intent intentStudentMap = new Intent(this, MapsActivity.class);
-            intentStudentMap.putExtra("categoryValue", "students");
-            startActivity(intentStudentMap);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
-
     public void save(View view) {
-
-
          studentName = studentNameET.getText().toString();
          studentRoll = studentRollET.getText().toString();
          schoolName = schoolNameAC.getText().toString();
@@ -273,7 +252,8 @@ public class StudentRegActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.viewReportMenu :
-                        Toast.makeText(StudentRegActivity.this, "report", Toast.LENGTH_SHORT).show();
+                        Intent intentReport = new Intent(StudentRegActivity.this, ReportActivity.class);
+                        startActivity(intentReport);
                         drawerLayout.closeDrawers();
                         return true;
                 }

@@ -9,10 +9,9 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
-
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
                         return true;
 
                     case R.id.viewReportMenu :
-                        Toast.makeText(MainActivity.this, "report", Toast.LENGTH_SHORT).show();
+                        Intent intentReport = new Intent(MainActivity.this, ReportActivity.class);
+                        startActivity(intentReport);
                         drawerLayout.closeDrawers();
                         return true;
                 }
@@ -73,9 +73,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void btnBackPress(View view) {
-
-    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (toggle.onOptionsItemSelected(item)){

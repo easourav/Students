@@ -60,6 +60,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<String> studentSchoolKey;
     ArrayList<String> aSchoolKey;
     ArrayList<String> studentNammes;
+    Integer total;
 
     String schoolName, schoolKey, schoolLat, schoolLng;
     String studentName, studentClass, studentRoll,studentSchoolName, schoolKeys;
@@ -147,6 +148,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                             studentsLat.add(student.getStudentLat());
                                             studentsLng.add(student.getStudentLng());
                                             studentNammes.add(student.getStudentName());
+                                             total = studentNammes.size();
                                         }
 
                                         for (int i = 0; i < studentsLat.size(); i++){
@@ -160,9 +162,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                         }
                                     }
-
                                 }
-
                             }
 
 
@@ -202,7 +202,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         View marker = ((LayoutInflater) mapsActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.student_custom_marker, null);
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) mapsActivity).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        marker.setLayoutParams(new ViewGroup.LayoutParams(52, ViewGroup.LayoutParams.WRAP_CONTENT));
+        marker.setLayoutParams(new ViewGroup.LayoutParams(20, 30));
         marker.measure(displayMetrics.widthPixels, displayMetrics.heightPixels);
         marker.layout(0, 0, displayMetrics.widthPixels, displayMetrics.heightPixels);
         marker.buildDrawingCache();
@@ -260,7 +260,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 @Override
                 public void onCameraIdle() {
                     LatLng centerLatLng = mMap.getCameraPosition().target;
-                    //Toast.makeText(MapsActivity.this, ""+centerLatLng, Toast.LENGTH_SHORT).show();
 
                     Geocoder geocoder = new Geocoder(MapsActivity.this , Locale.getDefault());
 
@@ -285,7 +284,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         LatLng dhaka = new LatLng(23.837097, 90.38483);
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dhaka, 18));
-        //mMap.addMarker(new MarkerOptions().position(dhaka).title("Marker in Dhaka"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(dhaka));
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;

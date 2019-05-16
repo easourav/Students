@@ -53,4 +53,14 @@
     <string name="menu_send">Send</string>
     <string name="student_address_tracking">Student address tracking</string>
     <string name="home">Home</string>
+    <string name="total_student">Total student:</string>
+    <string name="student_came_to_school">Student came to school</string>
+    <string name="by_bus">By bus:</string>
+    <string name="_100">100</string>
+    <string name="privet_car">Privet car:</string>
+    <string name="cng">CNG</string>
+    <string name="uber_pathao">Uber/Pathao</string>
+    <string name="by_rikshawa">By Rikshawa</string>
+    <string name="walking">Walking:</string>
+    <string name="other">Other</string>
 </resources>

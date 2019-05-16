@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -24,6 +25,11 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,6 +37,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,9 +52,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
 
+    private static final int REQUEST_CODE_FOR_LOCATION = 1;
+
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private LocationRequest locationRequest;
+    private LocationCallback locationCallback;
+
     Button setBtn;
     AutoCompleteTextView searchSchoolAC;
-    ImageView addressMarkerIv, closeIv;
+    ImageView addressMarkerIv, closeIv, searchIv;
 
     DatabaseReference databaseReference;
 
@@ -66,9 +79,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     String studentName, studentClass, studentRoll,studentSchoolName, schoolKeys;
 
     String doctorCategoryId;
-    double studentLat, studentLng;
+    double studentLat, studentLng, latitude, longitude;
 
-    LatLng latLngSchool;
+    LatLng latLngSchool, currentLatLng;
 
 
     @Override
@@ -80,6 +93,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         addressMarkerIv = findViewById(R.id.addressMarkerIv);
         closeIv = findViewById(R.id.ivClose);
         setBtn = findViewById(R.id.btnSet);
+        searchIv = findViewById(R.id.ivSearch);
+
+        getCurrentLatLng();
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -108,6 +124,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         schoolKey = schoolNameKeyArrayList.get(position);
                         schoolLat = schoolLatAL.get(position);
                         schoolLng = schoolLngAL.get(position);
+                        closeIv.setVisibility(View.VISIBLE);
 
                         getStudentSchoolKey();
 
@@ -212,6 +229,36 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         return bitmap;    }
 
+    private void getCurrentLatLng() {
+        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+                .setInterval(3000)
+                .setFastestInterval(1000);
+        locationCallback = new LocationCallback() {
+            @Override
+            public void onLocationResult(LocationResult locationResult) {
+                super.onLocationResult(locationResult);
+                for (Location location : locationResult.getLocations()) {
+
+                    latitude = location.getLatitude();
+                    longitude = location.getLongitude();
+
+                    currentLatLng = new LatLng(latitude,longitude);
+                }
+            }
+        };
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_FOR_LOCATION);
+            return;
+        }
+        fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, null);
+    }
+
     private void setSearchSchoolAutoComplite() {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("schools");
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -252,9 +299,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         if (doctorCategoryId.equals("address")){
             addressMarkerIv.setVisibility(View.VISIBLE);
-            searchSchoolAC.setCursorVisible(false);
+            searchSchoolAC.setVisibility(View.GONE);
             searchSchoolAC.getTextSize();
-            closeIv.setVisibility(View.GONE);
+            searchIv.setVisibility(View.VISIBLE);
             setBtn.setVisibility(View.VISIBLE);
             mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                 @Override
@@ -281,10 +328,40 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
             });
         }
+        else {
+            closeIv.setVisibility(View.VISIBLE);
+        }
 
-        LatLng dhaka = new LatLng(23.837097, 90.38483);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(dhaka, 18));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(dhaka));
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                    Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_FOR_LOCATION);
+            return;
+        }
+        fusedLocationProviderClient.getLastLocation()
+                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+                    @Override
+                    public void onSuccess(Location location) {
+                        // Got last known location. In some rare situations this can be null.
+                        if (location != null) {
+                            latitude = location.getLatitude();
+                            longitude = location.getLongitude();
+
+                            LatLng l = new LatLng(latitude,longitude);
+
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(l, 18));
+                            mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
+
+                            if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
+                                    != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this,
+                                    Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                                return;
+                            }
+                            mMap.setMyLocationEnabled(true);
+                        }
+                    }
+                });
+
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
@@ -320,5 +397,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         startActivity(intent);
 
         Toast.makeText(this, "Address set", Toast.LENGTH_SHORT).show();
+    }
+
+    public void btnSearch(View view) {
+        Toast.makeText(this, "h", Toast.LENGTH_SHORT).show();
     }
 }

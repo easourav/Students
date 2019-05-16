@@ -42,41 +42,83 @@
                     android:layout_width="0dp"
                     android:layout_weight="8"
                     android:layout_height="match_parent">
-                    <android.support.v7.widget.AppCompatAutoCompleteTextView
-                        android:id="@+id/actvSchoolSelect"
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:completionHint="Select a school"
-                        android:completionThreshold="1"
-                        android:hint="@string/search_school"
-                        android:maxLines="1"
-                        android:textSize="14sp"
-                        android:textColorHint="@color/colorBlackFaide"
-                        android:layout_marginRight="10dp"
-                        android:layout_marginLeft="10dp"
-                        android:drawableLeft="@drawable/ic_search_black"
-                        android:lines="1"
-                        android:theme="@style/autoCompliteTheme"
-                        android:textColor="@color/colorWhite"
-                        android:imeOptions="actionDone"
-                        android:background="@color/colorPrimary"
-                        android:popupBackground="@color/colorPrimary"
-                        android:padding="5dp"
-                        />
+                        android:background="@color/colorPrimary">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:id="@+id/addressTv"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <android.support.v7.widget.AppCompatAutoCompleteTextView
+                                android:id="@+id/actvSchoolSelect"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:completionHint="Select a school"
+                                android:completionThreshold="1"
+                                android:hint="@string/search_school"
+                                android:maxLines="1"
+                                android:textSize="14sp"
+                                android:textColorHint="@color/colorBlackFaide"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginLeft="10dp"
+                                android:drawableLeft="@drawable/ic_search_black"
+                                android:lines="1"
+                                android:theme="@style/autoCompliteTheme"
+                                android:textColor="@color/colorWhite"
+                                android:imeOptions="actionDone"
+                                android:background="@color/colorPrimary"
+                                android:popupBackground="@color/colorPrimary"
+                                android:padding="5dp"
+                                />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_weight=".75"
                     android:layout_height="match_parent">
-                    <ImageView
-                        android:id="@+id/ivClose"
-                        android:onClick="btnClose"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_close"
-                        />
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/ivSearch"
+                                android:onClick="btnSearch"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:layout_gravity="center"
+                                android:visibility="gone"
+                                android:src="@drawable/ic_search_black"
+                                />
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+                            <ImageView
+                                android:id="@+id/ivClose"
+                                android:onClick="btnClose"
+                                android:layout_width="25dp"
+                                android:layout_height="25dp"
+                                android:visibility="gone"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_close"
+                                />
+                        </LinearLayout>
+                    </RelativeLayout>
+
+
+
                 </LinearLayout>
 
             </LinearLayout>

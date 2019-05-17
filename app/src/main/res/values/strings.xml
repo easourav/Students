@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Student\'s</string>
     <string name="title_activity_maps">Map</string>
+    <string name="place_api_key">AIzaSyB9MxxJBmzLHdfsMEZSdV0vORR_MRwirPI</string>
 
     <string name="select_school">Select school</string>
     <string name="select_class">Select class</string>

@@ -77,13 +77,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<String> studentNammes;
     Integer total;
 
-    String schoolName, schoolKey, schoolLat, schoolLng;
+    String schoolName, schoolKey, schoolLat, schoolLng, addressId,selectedLat, selectedLng ;
     String studentName, studentClass, studentRoll,studentSchoolName, schoolKeys;
 
     String doctorCategoryId;
     double studentLat, studentLng, latitude, longitude;
 
-    LatLng latLngSchool, currentLatLng;
+    LatLng latLngSchool, currentLatLng, selectedLatLng;
 
 
     @Override
@@ -110,6 +110,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         studentSchoolName = getIntent().getStringExtra("schoolName");
         studentRoll = getIntent().getStringExtra("sRoll");
         schoolKeys = getIntent().getStringExtra("schoolKey");
+
+        addressId = getIntent().getStringExtra("locationValue");
+        selectedLat = getIntent().getStringExtra("searchLat");
+        selectedLng = getIntent().getStringExtra("searchLng");
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -322,7 +326,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             studentLng = addresses.get(0).getLongitude();
                             if (!locality.isEmpty() && !country.isEmpty())
                                 addressTv.setText(locality );
-                            Toast.makeText(MapsActivity.this, ""+locality, Toast.LENGTH_SHORT).show();
                         }
 
                     }catch (Exception e){
@@ -404,6 +407,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void btnSearch(View view) {
-        Toast.makeText(this, "h", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this, AddressActivity.class);
+        startActivity(intent);
     }
 }

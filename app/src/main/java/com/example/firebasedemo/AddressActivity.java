@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.firebasedemo.PlaceAPI.Prediction;
 import com.example.firebasedemo.databinding.ActivityAddressBinding;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -29,10 +30,19 @@ public class AddressActivity extends AppCompatActivity implements PredictionInte
     private List<Prediction> predictions;
     private Geocoder geocoder;
 
+    String studentName, schoolName, schoolClass, studentRoll, schoolKey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_address);
+
+        studentName = getIntent().getStringExtra("sNamw");
+        schoolClass = getIntent().getStringExtra("sClass");
+        schoolName = getIntent().getStringExtra("scName");
+        studentRoll = getIntent().getStringExtra("sRoll");
+        schoolKey = getIntent().getStringExtra("sKey");
+
         initRecyclerView();
         hideSearchViewIcon();
         searchViewAction();
@@ -83,15 +93,20 @@ public class AddressActivity extends AppCompatActivity implements PredictionInte
             hideSoftKeyboard();
             if (addresses.size()>0){
 
-                String lat =String.valueOf(addresses.get(0).getLatitude());
-                String lng = String.valueOf(addresses.get(0).getLatitude());
+
+                String lat = String.valueOf(addresses.get(0).getLatitude());
+                String lng = String.valueOf(addresses.get(0).getLongitude());
 
                 Intent intent = new Intent(this, MapsActivity.class);
-                intent.putExtra("categoryValue", "address");
-                intent.putExtra("locationValue", "location");
+                intent.putExtra("categoryValue", "location");
+
                 intent.putExtra("searchLat", lat);
                 intent.putExtra("searchLng", lng);
-
+                intent.putExtra("schoolName", schoolName);
+                intent.putExtra("studentName", studentName);
+                intent.putExtra("studentClass", schoolClass);
+                intent.putExtra("sRoll", studentRoll);
+                intent.putExtra("schoolKey", schoolKey);
                 startActivity(intent);
 
             }

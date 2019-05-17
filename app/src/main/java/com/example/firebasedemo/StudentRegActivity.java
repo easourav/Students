@@ -45,7 +45,7 @@ public class StudentRegActivity extends AppCompatActivity {
     Spinner studentCameWaySP;
     Button locationBTN, saveBTN;
 
-    String studentName, schoolClass, studentRoll,schoolName, studentLat , studentLng;
+    String studentName, schoolClass, studentRoll,schoolName;
     Double lat, lng;
 
     ArrayList<String> schoolArrayList;

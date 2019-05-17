@@ -77,10 +77,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     ArrayList<String> studentNammes;
     Integer total;
 
-    String schoolName, schoolKey, schoolLat, schoolLng, addressId,selectedLat, selectedLng ;
+    String schoolName, schoolKey, schoolLat, schoolLng, addressId ;
     String studentName, studentClass, studentRoll,studentSchoolName, schoolKeys;
 
-    String doctorCategoryId;
+    String doctorCategoryId , selectedLat, selectedLng;
     double studentLat, studentLng, latitude, longitude;
 
     LatLng latLngSchool, currentLatLng, selectedLatLng;
@@ -114,6 +114,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         addressId = getIntent().getStringExtra("locationValue");
         selectedLat = getIntent().getStringExtra("searchLat");
         selectedLng = getIntent().getStringExtra("searchLng");
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -217,7 +218,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         return bitmap;
                     }
                 });
+                setMarkerOnCurrentPosition();
             }
+           /* else if (doctorCategoryId.equals("location")) {
+
+            }*/
         }
 
     }
@@ -334,11 +339,67 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
             });
+            setMarkerOnCurrentPosition();
+        }
+        else if (doctorCategoryId.equals("location")){
+            addressMarkerIv.setVisibility(View.VISIBLE);
+            searchSchoolAC.setVisibility(View.GONE);
+            searchSchoolAC.getTextSize();
+            searchIv.setVisibility(View.VISIBLE);
+            setBtn.setVisibility(View.VISIBLE);
+
+            double lat = Double.valueOf(selectedLat);
+            double lng = Double.valueOf(selectedLng);
+
+            LatLng selectedLatLn = new LatLng(lat,lng);
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLn, 18));
+
+            mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
+                @Override
+                public void onCameraIdle() {
+                    LatLng centerLatLng = mMap.getCameraPosition().target;
+
+                    Geocoder geocoder = new Geocoder(MapsActivity.this , Locale.getDefault());
+
+                    try {
+                        List<Address> addresses = geocoder.getFromLocation(centerLatLng.latitude , centerLatLng.longitude,1);
+                        if (addresses != null && addresses.size() > 0) {
+                            String locality = addresses.get(0).getAddressLine(0);
+                            String country = addresses.get(0).getCountryName();
+                            studentLat = addresses.get(0).getLatitude();
+                            studentLng = addresses.get(0).getLongitude();
+                            if (!locality.isEmpty() && !country.isEmpty())
+                                addressTv.setText(locality );
+                        }
+
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+
+                }
+            });
+
         }
         else {
             closeIv.setVisibility(View.VISIBLE);
         }
 
+
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mMap.setMyLocationEnabled(true);
+        mMap.isBuildingsEnabled();
+        mMap.isIndoorEnabled();
+        mMap.getUiSettings().isTiltGesturesEnabled();
+        mMap.getUiSettings().isCompassEnabled();
+        mMap.getUiSettings().isMapToolbarEnabled();
+        mMap.stopAnimation();
+        mMap.getUiSettings().setZoomControlsEnabled(true);
+    }
+
+    private void setMarkerOnCurrentPosition() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION}, REQUEST_CODE_FOR_LOCATION);
@@ -358,6 +419,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(l, 18));
                             mMap.moveCamera(CameraUpdateFactory.newLatLng(l));
 
+
                             if (ActivityCompat.checkSelfPermission(MapsActivity.this, Manifest.permission.ACCESS_FINE_LOCATION)
                                     != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(MapsActivity.this,
                                     Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -368,18 +430,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     }
                 });
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        mMap.setMyLocationEnabled(true);
-        mMap.isBuildingsEnabled();
-        mMap.isIndoorEnabled();
-        mMap.getUiSettings().isTiltGesturesEnabled();
-        mMap.getUiSettings().isCompassEnabled();
-        mMap.getUiSettings().isMapToolbarEnabled();
-        mMap.stopAnimation();
-        mMap.getUiSettings().setZoomControlsEnabled(true);
     }
 
     public void btnBackPress(View view) {
@@ -408,6 +458,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void btnSearch(View view) {
         Intent intent = new Intent(this, AddressActivity.class);
+        intent.putExtra("sNamw", studentName);
+        intent.putExtra("sClass", studentClass);
+        intent.putExtra("scName", studentSchoolName);
+        intent.putExtra("sRoll", studentRoll);
+        intent.putExtra("sKey", schoolKeys);
         startActivity(intent);
     }
 }

@@ -6,10 +6,13 @@ import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,6 +64,7 @@ public class ReportActivity extends AppCompatActivity {
     ArrayList<String> studentcameWayArrayList;
 
     PieChart pieChart;
+    Toolbar toolbar;
 
     String schoolKey;
 
@@ -83,37 +87,13 @@ public class ReportActivity extends AppCompatActivity {
         totalBywalkingTv = findViewById(R.id.walkingTv);
         totalByOtherTv = findViewById(R.id.othersTv);
 
-        /*pieChart = findViewById(R.id.chart);
-        pieChart.setUsePercentValues(true);
-        pieChart.setExtraOffsets(5, 10, 5, 5);
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
-        pieChart.setDrawHoleEnabled(true);
-        pieChart.setHoleColor(Color.WHITE);
-        pieChart.setTransparentCircleRadius(61f);
+        toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        final ActionBar actionBar = getSupportActionBar();
+        assert actionBar != null;
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
-        List<PieEntry> value = new ArrayList<>();
-        value.add(new PieEntry(100f, "jan"));
-        value.add(new PieEntry(35f, "Feb"));
-        value.add(new PieEntry(55f, "March"));
-
-        PieDataSet pieDataSet = new PieDataSet(value, "Month");
-        PieData pieData = new PieData(pieDataSet);
-        pieChart.setData(pieData);
-        pieDataSet.setSliceSpace(2f);
-        pieDataSet.setSelectionShift(5f);
-
-        pieDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
-
-        Description description = new Description();
-        description.setText("");
-        description.setTextSize(20f);
-        pieChart.setDescription(description);*/
-
-
-        toggle=new ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
 
         setSearchSchoolAutoComplite();
         navItemClicked();
@@ -321,8 +301,10 @@ public class ReportActivity extends AppCompatActivity {
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (toggle.onOptionsItemSelected(item)){
-            return true;
+        switch (item.getItemId()){
+            case android.R.id.home:
+                drawerLayout.openDrawer(GravityCompat.START);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
